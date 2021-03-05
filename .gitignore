@@ -30,7 +30,7 @@ obj/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
-/[Pp]ackages/
+[Pp]ackages/
 #Tooling
 _ReSharper*/
 *.resharper
