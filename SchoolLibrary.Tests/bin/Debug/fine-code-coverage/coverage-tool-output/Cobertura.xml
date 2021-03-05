@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.07173082173082174" branch-rate="0.05434782608695652" lines-covered="1051" lines-valid="14652" branches-covered="280" branches-valid="5152" complexity="5500" version="0" timestamp="1614956591">
+<coverage line-rate="0.07173082173082174" branch-rate="0.05434782608695652" lines-covered="1051" lines-valid="14652" branches-covered="280" branches-valid="5152" complexity="5500" version="0" timestamp="1614960492">
   <sources />
   <packages>
     <package name="FluentAssertions" line-rate="0.013561659579358695" branch-rate="0.0065334358186010764" complexity="3162">
@@ -16311,26 +16311,26 @@
             </method>
             <method name="TestDeleteBook_ReturnsNotFound" signature="()" line-rate="1" branch-rate="0.5" complexity="3">
               <lines>
-                <line number="161" hits="1" branch="false" />
                 <line number="164" hits="1" branch="false" />
-                <line number="165" hits="1" branch="false" />
-                <line number="166" hits="1" branch="false" />
-                <line number="168" hits="1" branch="true" condition-coverage="50% (1/2)" />
-                <line number="170" hits="1" branch="false" />
-                <line number="171" hits="1" branch="false" />
-                <line number="172" hits="1" branch="false" />
+                <line number="167" hits="1" branch="false" />
+                <line number="168" hits="1" branch="false" />
+                <line number="169" hits="1" branch="false" />
+                <line number="171" hits="1" branch="true" condition-coverage="50% (1/2)" />
+                <line number="173" hits="1" branch="false" />
+                <line number="174" hits="1" branch="false" />
+                <line number="175" hits="1" branch="false" />
               </lines>
             </method>
             <method name="TestDeleteBook_ReturnsBadRequest" signature="()" line-rate="1" branch-rate="0.5" complexity="3">
               <lines>
-                <line number="176" hits="1" branch="false" />
-                <line number="178" hits="1" branch="false" />
                 <line number="179" hits="1" branch="false" />
-                <line number="180" hits="1" branch="false" />
-                <line number="182" hits="1" branch="true" condition-coverage="50% (1/2)" />
-                <line number="184" hits="1" branch="false" />
-                <line number="185" hits="1" branch="false" />
-                <line number="186" hits="1" branch="false" />
+                <line number="181" hits="1" branch="false" />
+                <line number="182" hits="1" branch="false" />
+                <line number="183" hits="1" branch="false" />
+                <line number="185" hits="1" branch="true" condition-coverage="50% (1/2)" />
+                <line number="187" hits="1" branch="false" />
+                <line number="188" hits="1" branch="false" />
+                <line number="189" hits="1" branch="false" />
               </lines>
             </method>
           </methods>
@@ -16416,22 +16416,22 @@
             <line number="155" hits="1" branch="false" />
             <line number="156" hits="1" branch="false" />
             <line number="157" hits="1" branch="false" />
-            <line number="161" hits="1" branch="false" />
             <line number="164" hits="1" branch="false" />
-            <line number="165" hits="1" branch="false" />
-            <line number="166" hits="1" branch="false" />
-            <line number="168" hits="1" branch="true" condition-coverage="50% (1/2)" />
-            <line number="170" hits="1" branch="false" />
-            <line number="171" hits="1" branch="false" />
-            <line number="172" hits="1" branch="false" />
-            <line number="176" hits="1" branch="false" />
-            <line number="178" hits="1" branch="false" />
+            <line number="167" hits="1" branch="false" />
+            <line number="168" hits="1" branch="false" />
+            <line number="169" hits="1" branch="false" />
+            <line number="171" hits="1" branch="true" condition-coverage="50% (1/2)" />
+            <line number="173" hits="1" branch="false" />
+            <line number="174" hits="1" branch="false" />
+            <line number="175" hits="1" branch="false" />
             <line number="179" hits="1" branch="false" />
-            <line number="180" hits="1" branch="false" />
-            <line number="182" hits="1" branch="true" condition-coverage="50% (1/2)" />
-            <line number="184" hits="1" branch="false" />
-            <line number="185" hits="1" branch="false" />
-            <line number="186" hits="1" branch="false" />
+            <line number="181" hits="1" branch="false" />
+            <line number="182" hits="1" branch="false" />
+            <line number="183" hits="1" branch="false" />
+            <line number="185" hits="1" branch="true" condition-coverage="50% (1/2)" />
+            <line number="187" hits="1" branch="false" />
+            <line number="188" hits="1" branch="false" />
+            <line number="189" hits="1" branch="false" />
           </lines>
         </class>
         <class name="SchoolLibrary.Tests.Controllers.HomeControllerTest" filename="C:\Users\Admin\source\repos\BookLibraryForSchool\BookLibraryForSchool\SchoolLibrary.Tests\Controllers\HomeControllerTest.cs" line-rate="1" branch-rate="0.5" complexity="3">
