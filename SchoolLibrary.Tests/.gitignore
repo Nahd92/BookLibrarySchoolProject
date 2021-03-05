@@ -27,6 +27,7 @@
 ipch/
 SchoolLibrary.Tests/obj/
 SchoolLibrary.Tests/[Bb]in
+SchoolLibrary.Tests/Properties
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
