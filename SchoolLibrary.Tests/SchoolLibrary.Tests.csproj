@@ -3,7 +3,6 @@
   <Import Project="..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props" Condition="Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props')" />
   <Import Project="..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props" Condition="Exists('..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props" Condition="Exists('..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props')" />
-  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
   <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -484,18 +483,6 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BooksControllerTest.cs" />
@@ -530,7 +517,6 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -539,8 +525,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props'))" />
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets'))" />
-    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
-    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Razor.Design.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props'))" />
@@ -548,7 +532,6 @@
     <Error Condition="!Exists('..\packages\NUnit.3.13.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.1\build\NUnit.props'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" />
-  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
