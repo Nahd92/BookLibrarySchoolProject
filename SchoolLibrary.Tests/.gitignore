@@ -32,10 +32,12 @@ obj/
 Ankh.NoLoad
 packages/
 #Tooling
-_ReSharper*/
-*.resharper
-[Tt]est[Rr]esult*
-
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
 #Project files
 [Bb]uild/
 
