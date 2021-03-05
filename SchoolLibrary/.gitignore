@@ -35,8 +35,8 @@ packages/
 *.suo
 *.user
 _ReSharper.*
-bin
-obj
+SchoolLibrary/bin
+SchoolLibrary/obj
 packages
 
 #Project files
