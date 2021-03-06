@@ -1,8 +1,10 @@
 ﻿using SchoolLibrary.Contracts.Request;
 using SchoolLibrary.Contracts.Response;
 using SchoolLibrary.Domain.Interfaces;
+using SchoolLibrary.Domain.Models;
 using SchoolLibrary.Domain.Models.ModelBooks;
 using SchoolLibrary.Extensions;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -29,8 +31,8 @@ namespace SchoolLibrary.Controllers
             if (book == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            var Json = new JsonResult { Data = book, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK);
+            var Json = new JsonResult { Data = book };
+            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -42,8 +44,8 @@ namespace SchoolLibrary.Controllers
             if (book == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            var Json = new JsonResult { Data = book, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK);
+            var Json = new JsonResult { Data = book };
+            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -63,37 +65,56 @@ namespace SchoolLibrary.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Create([Bind(Include = "")] CreateBookRequest createBookRequest)
+        public async Task<ActionResult> Create(CreateBookRequest createBookRequest)
         {
             if (!ModelState.IsValid)
                    return new HttpStatusCodeResult(400);
+
+
+            var author =  await _repoWrapper.Author.CreateAsync(new Author() 
+                        { FirstName = createBookRequest.AuthorName, LastName = createBookRequest.AuthorLastName });
+
+            if (author == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No Authors was inputed");
+
+
+            var category = await _repoWrapper.Category.GetCategoryByName(createBookRequest.Category);
+
+            if (category == null)
+                 return new HttpStatusCodeResult(HttpStatusCode.NotFound, "No Category could be found with that name!");
             
+
             var book = new IBooks
             {
-                Id = createBookRequest.Id, // <--- Tas bort när projeket bind med Databas
                 Title = createBookRequest.Title,
-                Description = createBookRequest.Description,
+                Descriptions = createBookRequest.Descriptions,
                 Published = createBookRequest.Published,
                 PageCount = createBookRequest.PageCount,
-                ISBN = _repoWrapper.Book.CreateISBN(),               
+                ISBN = _repoWrapper.Book.CreateISBN(),
+                AuthorId = author.Id,
+                CategoryId =  category.Id
             };
 
             var created = await _repoWrapper.Book.CreateAsync(book);
 
-            // if (!created)
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (!created)
+               return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             
             var response = new BookResponse
             {
                 Id = book.Id,
                 ISBN = book.ISBN,
-                Description = book.Description,
+                Descriptions = book.Descriptions,
                 Published = book.Published,
-                PageCount = book.PageCount
+                PageCount = book.PageCount,
+                Title = book.Title,
+                Author = $"{author.FirstName} {author.LastName}",
+                Category = category.Name              
             };
 
-            var Json =  new JsonResult { Data = response, JsonRequestBehavior = JsonRequestBehavior.AllowGet   };
-            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.Created);
+            var Json =  new JsonResult { Data = response};
+            return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -107,7 +128,7 @@ namespace SchoolLibrary.Controllers
             {
                 Id = id,
                 Title = request.Title,
-                Description = request.Description,
+                Descriptions = request.Descriptions,
                 ISBN = request.ISBN
             };
 

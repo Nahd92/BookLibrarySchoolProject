@@ -3,6 +3,7 @@ using SchoolLibrary.Domain.Interfaces;
 using SchoolLibrary.Domain.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SchoolLibrary.Logic.Repository
@@ -14,13 +15,21 @@ namespace SchoolLibrary.Logic.Repository
         {
             _database = database;
         }
+        public async Task<Author> GetAuthorByName(Author author) =>
+                        await _database.Authors.Where(x => x.FirstName == author.FirstName 
+                                        && x.LastName == author.LastName).FirstOrDefaultAsync();
 
+        public bool AuthorExistByName(string firstName, string LastName) => 
+                    _database.Authors.Any(x => x.FirstName == firstName && x.LastName == LastName);
 
-        public async Task<bool> CreateAsync(Author author)
+        public async Task<Author> CreateAsync(Author author)
         {
-            _database.Authors.Add(author);
-            var created = await _database.SaveChangesAsync();
-            return created > 0;
+            if (AuthorExistByName(author.FirstName, author.LastName)) 
+                return await GetAuthorByName(author);
+            
+            var createdAuthor = _database.Authors.Add(author);
+            await _database.SaveChangesAsync();
+            return createdAuthor;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -46,5 +55,7 @@ namespace SchoolLibrary.Logic.Repository
             var updated = await _database.SaveChangesAsync();
             return updated > 0;
         }
+
+     
     }
 }

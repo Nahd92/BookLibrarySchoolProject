@@ -6,7 +6,7 @@ namespace SchoolLibrary.Data.Database
 {
     public class SchoolProjectDatabase : DbContext
     {
-        public SchoolProjectDatabase() : base("SchoolProjectDatabase")
+        public SchoolProjectDatabase() : base("BookLibraryForSchool")
         {
                 
         }
@@ -19,9 +19,6 @@ namespace SchoolLibrary.Data.Database
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<IBooks>()
-                           .HasKey(x => new { x.AuthorId, x.CategoryId });
         }
     }
 }

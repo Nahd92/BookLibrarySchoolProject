@@ -13,6 +13,7 @@ namespace SchoolLibrary.Domain.Interfaces
         Task<Author> GetAuthorById(int id);
         Task<bool> UpdateAsync(int id, Author author);
         Task<bool> DeleteAsync(int id);
-        Task<bool> CreateAsync(Author author);
+        Task<Author> CreateAsync(Author author);
+        bool AuthorExistByName(string firstName, string LastName);
     }
 }

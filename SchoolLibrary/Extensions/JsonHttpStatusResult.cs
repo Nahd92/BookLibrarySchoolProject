@@ -10,11 +10,13 @@ namespace SchoolLibrary.Extensions
     public class JsonHttpStatusResult : JsonResult
     {
         public readonly int StatusCode;
+        
 
-        public JsonHttpStatusResult(object data, HttpStatusCode httpStatus)
+        public JsonHttpStatusResult(object data, HttpStatusCode httpStatus, JsonRequestBehavior jsonRequest)
         {
             Data = data;
             StatusCode = Convert.ToInt32(httpStatus);
+            JsonRequestBehavior = jsonRequest;
         }
 
         public override void ExecuteResult(ControllerContext context)

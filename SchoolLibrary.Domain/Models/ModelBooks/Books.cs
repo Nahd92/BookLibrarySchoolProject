@@ -11,7 +11,7 @@ namespace SchoolLibrary.Domain.Models.ModelBooks
         [Required]
         public string Title { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string Descriptions { get; set; }
         [Required]
         public string ISBN { get; set; }
         [Required]
@@ -25,5 +25,8 @@ namespace SchoolLibrary.Domain.Models.ModelBooks
     
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+
+        
     }
 }

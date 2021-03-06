@@ -12,8 +12,5 @@ namespace SchoolLibrary.Domain.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-
-
-        public ICollection<IBooks> Books { get; set; }
     }
 }

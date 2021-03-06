@@ -11,7 +11,7 @@ namespace SchoolLibrary.Domain.Interfaces
 
         int Id { get; set; }
         string Title { get; set; }
-        string Description { get; set; }
+        string Descriptions { get; set; }
         string ISBN { get; set; }
         DateTime Published { get; set; }
         int PageCount { get; set; }

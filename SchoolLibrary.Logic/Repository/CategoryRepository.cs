@@ -3,6 +3,8 @@ using SchoolLibrary.Domain.Interfaces;
 using SchoolLibrary.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SchoolLibrary.Logic.Repository
@@ -16,32 +18,33 @@ namespace SchoolLibrary.Logic.Repository
             _database = database;
         }
 
-        public Task<bool> CreateAsync(Category category)
+        public async Task<bool> CreateAsync(Category category)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await GetCategoryById(id);
+
+            if (category == null)
+                return false;
+
+            _database.Categories.Remove(category);
+            var deleted = await _database.SaveChangesAsync();
+            return deleted > 0;
         }
 
-        public Task<IEnumerable<Category>> GetCategories()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Category>> GetCategories() => await _database.Categories.ToListAsync();
 
-        public Task<Category> GetCategoryById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Category> GetCategoryById(int id) => 
+                        await _database.Categories.Where(x => x.Id == id).SingleOrDefaultAsync();
 
-        public Task<Category> GetCategoryByName(string name)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Category> GetCategoryByName(string name) => 
+                        await _database.Categories.Where(x => x.Name == name).SingleOrDefaultAsync();
 
-        public Task<bool> UpdateAsync(int id, Category category)
+
+        public async Task<bool> UpdateAsync(int id, Category category)
         {
             throw new NotImplementedException();
         }

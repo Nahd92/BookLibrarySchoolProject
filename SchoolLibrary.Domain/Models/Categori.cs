@@ -11,6 +11,7 @@ namespace SchoolLibrary.Domain.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<IBooks> Books { get; set; }
+
+   
     }
 }

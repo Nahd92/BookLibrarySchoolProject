@@ -22,19 +22,19 @@ namespace SchoolLibrary.Tests.Controllers
 
          private IEnumerable<IBooks> expectedBooks = new List<IBooks>(2)
             {
-                new IBooks() { Id = 1, Title = "Lord of the rings", Description = "Long", ISBN = "12345678912-1" },
-                new IBooks() { Id = 2, Title = "Pippi", Description = "short", ISBN = "12344678912-5" }
+                new IBooks() { Id = 1, Title = "Lord of the rings", Descriptions = "Long", ISBN = "12345678912-1" },
+                new IBooks() { Id = 2, Title = "Pippi", Descriptions = "short", ISBN = "12344678912-5" }
             };
 
         private IBooks createBook = new IBooks()
         {
-            Id = 1, Title = "Lord of the rings", Description = "Long",
+            Id = 1, Title = "Lord of the rings", Descriptions = "Long",
             Published = DateTime.Parse("2020-02-20"), PageCount = 400
         };
 
         private CreateBookRequest createBookByRequest = new CreateBookRequest()
                 {
-                    Id = 1, Title = "Lord of the rings", Description = "Long", 
+                    Id = 1, Title = "Lord of the rings", Descriptions = "Long", 
                     Published = DateTime.Parse("2020-02-20"), PageCount = 400 
                 };
             
@@ -78,7 +78,7 @@ namespace SchoolLibrary.Tests.Controllers
             {
                 Id = 1,
                 Title = "Lord of the rings",
-                Description = "Long",
+                Descriptions = "Long",
                 Published = DateTime.Parse("2020-02-20"),
                 PageCount = 400
             }));
@@ -134,7 +134,7 @@ namespace SchoolLibrary.Tests.Controllers
 
             var response = await controller.Create(createBookByRequest);
             //Assert
-
+            
             var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
             var book = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
             book.Id.Should().Be(1);
