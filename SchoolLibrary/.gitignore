@@ -37,7 +37,7 @@ packages/
 _ReSharper.*
 SchoolLibrary/bin
 SchoolLibrary/obj
-SchoolLibrary/Scripts/
+Scripts
 SchoolLibrary/Content/
 packages
 
