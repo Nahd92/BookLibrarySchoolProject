@@ -27,6 +27,8 @@
 ipch/
 obj/
 [Bb]in
+[Ss]cripts/
+[Cc]ontent/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
@@ -35,10 +37,7 @@ packages/
 *.suo
 *.user
 _ReSharper.*
-SchoolLibrary/bin
-SchoolLibrary/obj
-Scripts
-SchoolLibrary/Content/
+
 packages
 
 #Project files
