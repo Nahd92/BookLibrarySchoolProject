@@ -9,8 +9,8 @@ namespace SchoolLibrary.Domain.Interfaces
 {
     public interface IAuthorService
     {
-        Task<IEnumerable<Author>> GetAuthors();
-        Task<Author> GetAuthorById(int id);
+        Task<IEnumerable<Author>> GetAuthorsAsync();
+        Task<Author> GetAuthorByIdAsync(int id);
         Task<bool> UpdateAsync(int id, Author author);
         Task<bool> DeleteAsync(int id);
         Task<Author> CreateAsync(Author author);

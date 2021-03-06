@@ -34,7 +34,7 @@ namespace SchoolLibrary.Logic.Repository
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var author = await GetAuthorById(id);
+            var author = await GetAuthorByIdAsync(id);
 
             if (author == null)
                 return false;
@@ -44,13 +44,13 @@ namespace SchoolLibrary.Logic.Repository
             return deleted > 0;
         }
 
-        public async Task<Author> GetAuthorById(int id) => await _database.Authors.SingleOrDefaultAsync(x => x.Id == id);
+        public async Task<Author> GetAuthorByIdAsync(int id) => await _database.Authors.SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task<IEnumerable<Author>> GetAuthors() => await _database.Authors.ToListAsync();
+        public async Task<IEnumerable<Author>> GetAuthorsAsync() => await _database.Authors.ToListAsync();
 
         public async Task<bool> UpdateAsync(int id, Author author)
         {
-            var authorId = GetAuthorById(id);
+            var authorId = GetAuthorByIdAsync(id);
             _database.Entry(authorId).CurrentValues.SetValues(author);
             var updated = await _database.SaveChangesAsync();
             return updated > 0;

@@ -23,7 +23,7 @@ namespace SchoolLibrary.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllAuthors()
         {            
-            var authors = await _repoWrapper.Author.GetAuthors();
+            var authors = await _repoWrapper.Author.GetAuthorsAsync();
 
             if (authors == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -34,7 +34,7 @@ namespace SchoolLibrary.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAuthorById(int id)
         {
-            var author = await _repoWrapper.Author.GetAuthorById(id);
+            var author = await _repoWrapper.Author.GetAuthorByIdAsync(id);
 
             if (author != null)
                 return new JsonResult { Data = author, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

@@ -5,8 +5,10 @@ using SchoolLibrary.Contracts.Request;
 using SchoolLibrary.Contracts.Response;
 using SchoolLibrary.Controllers;
 using SchoolLibrary.Domain.Interfaces;
+using SchoolLibrary.Domain.Models;
 using SchoolLibrary.Domain.Models.ModelBooks;
 using SchoolLibrary.Extensions;
+using SchoolLibrary.Logic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +31,29 @@ namespace SchoolLibrary.Tests.Controllers
         private IBooks createBook = new IBooks()
         {
             Id = 1, Title = "Lord of the rings", Descriptions = "Long",
-            Published = DateTime.Parse("2020-02-20"), PageCount = 400
+            Published = DateTime.Parse("2020-02-20"), PageCount = 400, ISBN = "123456789121"
         };
 
         private CreateBookRequest createBookByRequest = new CreateBookRequest()
                 {
                     Id = 1, Title = "Lord of the rings", Descriptions = "Long", 
-                    Published = DateTime.Parse("2020-02-20"), PageCount = 400 
+                    Published = DateTime.Parse("2020-02-20"), PageCount = 400, Category = "Adventure", AuthorName = "J.R.R", AuthorLastName = "Tolkien"
                 };
-            
+
+
+
+
+
+
+
+        private readonly Mock<IRepositoryWrapper> mockService;
+        private readonly BooksController bookController;
+
+        public BooksControllerTest()
+        {
+            mockService = new Mock<IRepositoryWrapper>();
+            bookController = new BooksController(mockService.Object);
+        }
 
 
 
@@ -45,11 +61,9 @@ namespace SchoolLibrary.Tests.Controllers
         public async Task TestGetAllBooks_WithEmptyBook_ShouldReturnNotFound()
         {
             //Arrange          
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.GetAllBooksAsync()).Returns(Task.Run(() => emptyList));
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.GetAll();
+            var response = await bookController.GetAll();
             //Assert
             var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
             result.StatusCode.Should().Be(404);
@@ -59,11 +73,9 @@ namespace SchoolLibrary.Tests.Controllers
         public async Task TestGetBooksById_WithNullInInput_ShouldReturnBadRequest()
         {
             //Arrange 
-            var mockService = new Mock<IRepositoryWrapper>();
-            mockService.Setup(x => x.Book.GetBookByIdAsync(It.IsAny<int>())).Returns(() => null);
-            var controller = new BooksController(mockService.Object);
+            mockService.Setup(x => x.Book.GetBookByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
             //Act
-            var response = await controller.GetById(null);
+            var response = await bookController.GetById(null);
             //Assert
             var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
             result.StatusCode.Should().Be(400);
@@ -73,7 +85,6 @@ namespace SchoolLibrary.Tests.Controllers
         public async Task TestGetBooksById_WithCorrectInput_ShouldReturnStatusCodeOk()
         {
             //Arrange s
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.GetBookByIdAsync(It.IsAny<int>())).Returns(Task.Run(() => new IBooks()
             {
                 Id = 1,
@@ -82,24 +93,38 @@ namespace SchoolLibrary.Tests.Controllers
                 Published = DateTime.Parse("2020-02-20"),
                 PageCount = 400
             }));
-
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.GetById(1);
+            var response = await bookController.GetById(1);
             //Assert
             var result = response.Should().BeOfType<JsonHttpStatusResult>().Which;
             result.StatusCode.Should().Be(200);
         }
 
+
+        [TestMethod]
+        public async Task TestGetBooksById_WithCorrectInput_ShouldReturnBookWithSameTitle()
+        {
+            //Arrange s
+            mockService.Setup(x => x.Book.GetBookByIdAsync(It.IsAny<int>())).Returns(Task.Run(() => createBook));
+
+            //Act
+            var response = await bookController.GetById(1);
+            //Assert
+            var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
+            var book = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
+            book.Title.Should().Be("Lord of the rings");
+        }
+
+
+
+
         [TestMethod]
         public async Task TestGetAllBooks_ReturnsAListWithTwoBooks()
         {
             //Arrange
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.GetAllBooksAsync()).Returns(Task.Run(() => expectedBooks));
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.GetAll();
+            var response = await bookController.GetAll();
             //Assert
 
             var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
@@ -111,33 +136,57 @@ namespace SchoolLibrary.Tests.Controllers
         public async Task TestCreateBook_ReturnsCreatedStatusCode()
         {
             //Arrange
-            var mockService = new Mock<IRepositoryWrapper>();
-            mockService.Setup(x => x.Book.CreateAsync(createBook)).ReturnsAsync(true);
-            var controller = new BooksController(mockService.Object);
+            mockService.Setup(x => x.Book.CreateAsync(It.IsAny<IBooks>())).ReturnsAsync(true);
+            mockService.Setup(y => y.Author.CreateAsync(It.IsAny<Author>())).ReturnsAsync(() => new Author
+            {
+                Id = 1,
+                FirstName = "J.R.R",
+                LastName = "Tolkien"
+            });
+            mockService.Setup(e => e.Category.GetCategoryByName(It.IsAny<string>())).ReturnsAsync(() => new Category 
+            {
+             Id = 1,
+             Name = "Adventure"
+            });
+
+
             //Act
+            var response = await bookController.Create(createBookByRequest);
 
-            var response = await controller.Create(createBookByRequest);
+
             //Assert
-
+            mockService.Verify(x => x.Author.CreateAsync(It.IsAny<Author>()), Times.Once());
+            mockService.Verify(x => x.Category.GetCategoryByName(It.IsAny<string>()), Times.Once());
             var result = response.Should().BeOfType<JsonHttpStatusResult>().Which;
-            result.StatusCode.Should().Be(201);
+            result.StatusCode.Should().Be(200);
         }
 
         [TestMethod]
-        public async Task TestCreateBook_ReturnsCorrectId()
+        public async Task TestCreateBook_ReturnsCorrectAuthor()
         {
             //Arrange
-            var mockService = new Mock<IRepositoryWrapper>();
-            mockService.Setup(x => x.Book.CreateAsync(createBook)).ReturnsAsync(true);
-            var controller = new BooksController(mockService.Object);
-            //Act
+            mockService.Setup(x => x.Book.CreateAsync(It.IsAny<IBooks>())).ReturnsAsync(true);
+            mockService.Setup(y => y.Author.CreateAsync(It.IsAny<Author>())).ReturnsAsync(() => new Author
+            {
+                Id = 1,
+                FirstName = "J.R.R",
+                LastName = "Tolkien"
+            });
+            mockService.Setup(e => e.Category.GetCategoryByName(It.IsAny<string>())).ReturnsAsync(() => new Category
+            {
+                Id = 1,
+                Name = "Adventure"
+            });
 
-            var response = await controller.Create(createBookByRequest);
-            //Assert
-            
+            //Act
+            var response = await bookController.Create(createBookByRequest);
+
+            //Assert    
+            mockService.Verify(x => x.Author.CreateAsync(It.IsAny<Author>()), Times.Once());
+            mockService.Verify(x => x.Category.GetCategoryByName(It.IsAny<string>()), Times.Once());
             var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
-            var book = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
-            book.Id.Should().Be(1);
+            var bookResponseResult = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
+            bookResponseResult.Author.Should().Be("J.R.R Tolkien");
         }
 
 
@@ -146,11 +195,9 @@ namespace SchoolLibrary.Tests.Controllers
         {
             //Arrange
             const int deletedId = 1;
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.DeleteAsync(deletedId)).ReturnsAsync(true);
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.Delete(deletedId);
+            var response = await bookController.Delete(deletedId);
             //Assert
             var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
             result.StatusCode.Should().Be(204);
@@ -164,11 +211,9 @@ namespace SchoolLibrary.Tests.Controllers
         {
             //Arrange
             const int deletedId = 3;
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.DeleteAsync(deletedId)).ReturnsAsync(false);
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.Delete(deletedId);
+            var response = await bookController.Delete(deletedId);
             //Assert
             var result = response.Should().BeOfType<HttpNotFoundResult>().Which;
             result.StatusCode.Should().Be(404);
@@ -178,11 +223,9 @@ namespace SchoolLibrary.Tests.Controllers
         public async Task TestDeleteBook_ReturnsBadRequest()
         {
             //Arrange
-            var mockService = new Mock<IRepositoryWrapper>();
             mockService.Setup(x => x.Book.DeleteAsync(It.IsAny<int>())).ReturnsAsync(false);
-            var controller = new BooksController(mockService.Object);
             //Act
-            var response = await controller.Delete(null);
+            var response = await bookController.Delete(null);
             //Assert
             var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
             result.StatusCode.Should().Be(400);

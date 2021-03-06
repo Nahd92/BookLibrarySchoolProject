@@ -1,10 +1,13 @@
-﻿using SchoolLibrary.Domain.Interfaces;
+﻿using Newtonsoft.Json;
+using SchoolLibrary.Domain.Interfaces;
 using System;
 
 namespace SchoolLibrary.Contracts.Request
 {
     public class CreateBookRequest
     {
+         [JsonIgnore]
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Descriptions { get; set; }
         public DateTime Published { get; set; }

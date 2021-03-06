@@ -31,7 +31,20 @@ namespace SchoolLibrary.Controllers
             if (book == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            var Json = new JsonResult { Data = book };
+            var bookReponse = new BookResponse
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Descriptions = book.Descriptions,
+                ISBN = book.ISBN,
+                PageCount = book.PageCount,
+                Published = book.Published,
+                Author = book.AuthorId.ToString(),
+                Category = book.CategoryId.ToString()
+            };
+
+
+            var Json = new JsonResult { Data = bookReponse };
             return new JsonHttpStatusResult(Json.Data, HttpStatusCode.OK, JsonRequestBehavior.AllowGet);
         }
 

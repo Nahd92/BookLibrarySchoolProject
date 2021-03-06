@@ -36,33 +36,17 @@ namespace SchoolLibrary.Logic.Repository
 
             if (book == null)
                 return false;
-            try
-            {
-
-                _database.Books.Remove(book);
-                
-                
-                var deleted = await _database.SaveChangesAsync();
-                return deleted > 0;
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
+         
+             _database.Books.Remove(book);
+             var deleted = await _database.SaveChangesAsync();
+             return deleted > 0;
         }
 
 
         //Oklart om denna fungererar
         public async Task<bool> UpdateAsync(int id, IBooks books)
         {
-            var bookId = GetBookByIdAsync(id);
-
-            if (bookId == null)
-                return new 
-                
-
+            var bookId = GetBookByIdAsync(id);            
             _database.Entry(bookId).CurrentValues.SetValues(books);
             var updated = await _database.SaveChangesAsync();
             return updated > 0;
