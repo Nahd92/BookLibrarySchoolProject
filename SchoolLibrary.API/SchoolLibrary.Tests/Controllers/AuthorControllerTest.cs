@@ -4,13 +4,9 @@ using Moq;
 using SchoolLibrary.Controllers;
 using SchoolLibrary.Domain.Interfaces;
 using SchoolLibrary.Domain.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
-using System.Web.Mvc;
 
 namespace SchoolLibrary.Tests.Controllers
 {
@@ -37,11 +33,7 @@ namespace SchoolLibrary.Tests.Controllers
             response.Should().BeOfType<NotFoundResult>();
         }
 
-        [TestMethod]
-        public async Task TestGetAuthorByIdAsync_WithExistingId_ShouldReturnAnAuthor()
-        {
-            
-        }
+      
 
     }
 }

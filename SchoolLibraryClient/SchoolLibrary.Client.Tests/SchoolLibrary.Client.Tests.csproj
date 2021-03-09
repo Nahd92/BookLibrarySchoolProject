@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5129B64E-F1FB-4783-8839-B47E98EB1198}</ProjectGuid>
+    <ProjectGuid>{B2564938-67AC-4B73-80FA-33C60D3C3FEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SchoolLibrary.Client.Tests</RootNamespace>
@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SchoolLibrary.Client\SchoolLibrary.Client.csproj">
-      <Project>{F7EE55B4-A657-452C-9CED-B042845A9E63}</Project>
+      <Project>{8545EAB6-35A6-4656-950F-B237E92D7A76}</Project>
       <Name>SchoolLibrary.Client</Name>
     </ProjectReference>
   </ItemGroup>

@@ -5,7 +5,6 @@ using SchoolLibrary.Contracts.Routes;
 using SchoolLibrary.Data.Database;
 using SchoolLibrary.Domain.Interfaces;
 using SchoolLibrary.Domain.Models;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 

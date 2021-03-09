@@ -18,7 +18,7 @@ namespace SchoolLibrary.Logic.Repository
             _database = database;
         }
 
-        public async Task<bool> CreateAsync(Category category)
+        public Task<bool> CreateAsync(Category category)
         {
             throw new NotImplementedException();
         }
@@ -44,7 +44,7 @@ namespace SchoolLibrary.Logic.Repository
                         await _database.Categories.Where(x => x.Name == name).SingleOrDefaultAsync();
 
 
-        public async Task<bool> UpdateAsync(int id, Category category)
+        public Task<bool> UpdateAsync(int id, Category category)
         {
             throw new NotImplementedException();
         }
