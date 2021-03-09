@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Tests", "Scho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client", "SchoolLibrary.Client\SchoolLibrary.Client.csproj", "{8545EAB6-35A6-4656-950F-B237E92D7A76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Tests", "SchoolLibraryClient\SchoolLibrary.Client.Tests\SchoolLibrary.Client.Tests.csproj", "{B2564938-67AC-4B73-80FA-33C60D3C3FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Domain", "SchoolLibrary.Client.Domain\SchoolLibrary.Client.Domain.csproj", "{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 		{8545EAB6-35A6-4656-950F-B237E92D7A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8545EAB6-35A6-4656-950F-B237E92D7A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8545EAB6-35A6-4656-950F-B237E92D7A76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2564938-67AC-4B73-80FA-33C60D3C3FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2564938-67AC-4B73-80FA-33C60D3C3FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2564938-67AC-4B73-80FA-33C60D3C3FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2564938-67AC-4B73-80FA-33C60D3C3FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +66,7 @@ Global
 		{75395D17-5001-4932-9237-8AA015A886BE} = {7AA50415-BB3D-4EF7-A970-6A72351470C8}
 		{89D6542E-860E-43DC-9BAE-26E86564FC57} = {7AA50415-BB3D-4EF7-A970-6A72351470C8}
 		{8545EAB6-35A6-4656-950F-B237E92D7A76} = {AD581BC8-9D80-409A-9BE8-A44EFB25B7F6}
-		{B2564938-67AC-4B73-80FA-33C60D3C3FEB} = {AD581BC8-9D80-409A-9BE8-A44EFB25B7F6}
+		{927E6B0D-DEF4-4EB1-BFA9-CB815891E994} = {AD581BC8-9D80-409A-9BE8-A44EFB25B7F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBBFFA04-9430-45FD-B870-1C8E28451716}
