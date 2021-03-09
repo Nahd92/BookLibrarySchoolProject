@@ -34,7 +34,7 @@ namespace SchoolLibrary.Contracts.Routes
         {
             public const string Login = "Login";
             public const string Register = "Register";
-            public const string Refresh = "Refresh";
+            public const string Logout = "Logout";
         }
     }
 }

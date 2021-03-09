@@ -18,6 +18,7 @@ namespace SchoolLibrary.Controllers
 
 
         [Route(RoutesAPI.Author.GetAll)]
+        [HttpGet]
         public async Task<IHttpActionResult> GetAllAuthors()
         {            
             var authors = await _repoWrapper.Author.GetAuthorsAsync();
@@ -29,6 +30,7 @@ namespace SchoolLibrary.Controllers
         }
 
         [Route(RoutesAPI.Author.GetById)]
+        [HttpGet]
         public async Task<IHttpActionResult> GetAuthorById(int id)
         {
             var author = await _repoWrapper.Author.GetAuthorByIdAsync(id);

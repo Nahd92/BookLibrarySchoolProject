@@ -33,6 +33,7 @@ namespace SchoolLibrary.Controllers
 
         //Får inte ut bestämda egenskaper från APIn.. Fel SelectTokens?
         [Route(RoutesAPI.Books.GetAllLibraries)]
+        [HttpGet]
         public async Task<IHttpActionResult> GetAllLibraries()
         {
             try
@@ -40,9 +41,9 @@ namespace SchoolLibrary.Controllers
                 var client = new HttpClient();
                 var librariesAPI = await client.GetFromJsonAsync<LibraryAPI>("https://bibdb.libris.kb.se/api/lib?dump=true&country_code=se");
 
-               var returnResponse = new List<LibraryResponse>();
-    
-               foreach (var library in librariesAPI.libraries.Where(i => i != null))
+                var returnResponse = new List<LibraryResponse>();
+
+                foreach (var library in librariesAPI.libraries.Where(i => i != null))
                 {
                     returnResponse.Add(new LibraryResponse { Name = library.name?.ToString() ?? null, Code = library.country_code?.ToString() ?? null, Url = library.url?.ToString() ?? null });
                 };
@@ -59,7 +60,8 @@ namespace SchoolLibrary.Controllers
 
 
         [Route(RoutesAPI.Books.GetById)]
-        public async Task<IHttpActionResult> GetById(int? id)
+        [HttpGet]
+        public async Task<IHttpActionResult> GetById([FromUri] int? id)
         {
             if (id == null)
                 return BadRequest();
@@ -87,6 +89,7 @@ namespace SchoolLibrary.Controllers
 
 
         [Route(RoutesAPI.Books.GetAll)]
+        [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
             var book = await _repoWrapper.Book.GetAllBooksAsync();
@@ -94,12 +97,14 @@ namespace SchoolLibrary.Controllers
             if (book == null)
                 return NotFound();
 
+          
             return Json(book);
         }
 
 
         [Route(RoutesAPI.Books.Delete)]
-        public async Task<IHttpActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IHttpActionResult> Delete([FromUri] int? id)
         {
             if (id == null)
                 return BadRequest();
@@ -115,14 +120,14 @@ namespace SchoolLibrary.Controllers
 
         [Route(RoutesAPI.Books.Create)]
         [HttpPost]
-        public async Task<IHttpActionResult> Create(CreateBookRequest createBookRequest)
+        public async Task<IHttpActionResult> Create([FromBody] CreateBookRequest createBookRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
 
-            var author =  await _repoWrapper.Author.CreateAsync(new Author() 
-                        { FirstName = createBookRequest.AuthorName, LastName = createBookRequest.AuthorLastName });
+            var author = await _repoWrapper.Author.CreateAsync(new Author()
+            { FirstName = createBookRequest.AuthorName, LastName = createBookRequest.AuthorLastName });
 
             if (author == null)
                 return BadRequest("No Authors was inputed");
@@ -131,8 +136,8 @@ namespace SchoolLibrary.Controllers
             var category = await _repoWrapper.Category.GetCategoryByName(createBookRequest.Category);
 
             if (category == null)
-                 return BadRequest("No Category could be found with that name!");
-            
+                return BadRequest("No Category could be found with that name!");
+
 
             var book = new IBooks
             {
@@ -142,7 +147,7 @@ namespace SchoolLibrary.Controllers
                 PageCount = createBookRequest.PageCount,
                 ISBN = _repoWrapper.Book.CreateISBN(),
                 AuthorId = author.Id,
-                CategoryId =  category.Id
+                CategoryId = category.Id
             };
 
             var created = await _repoWrapper.Book.CreateAsync(book);
@@ -159,7 +164,7 @@ namespace SchoolLibrary.Controllers
                 PageCount = book.PageCount,
                 Title = book.Title,
                 Author = $"{author.FirstName} {author.LastName}",
-                Category = category.Name              
+                Category = category.Name
             };
 
             return Json(response);
@@ -168,7 +173,7 @@ namespace SchoolLibrary.Controllers
 
         [Route(RoutesAPI.Books.Update)]
         [HttpPut]
-        public async Task<IHttpActionResult> Update(int id, UpdateBookRequest request)
+        public async Task<IHttpActionResult> Update([FromUri] int id, [FromBody] UpdateBookRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -182,7 +187,7 @@ namespace SchoolLibrary.Controllers
                 Published = DateTime.Parse(request.Published),
                 PageCount = request.PageCount,
                 CategoryId = category.Id
-        };
+            };
 
             var updated = await _repoWrapper.Book.UpdateAsync(id, book);
 

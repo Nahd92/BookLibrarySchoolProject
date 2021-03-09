@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Extensions.DependencyInjection;
 using SchoolLibrary.Data.Database;
 using SchoolLibrary.Domain.Interfaces;
+using SchoolLibrary.Domain.Models;
 using SchoolLibrary.Logic.Repository;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -40,7 +43,13 @@ namespace SchoolLibrary
             container.Register<IAuthorService, AuthorRepository>(Lifestyle.Scoped);
             container.Register<IBookServices, BookRepository>(Lifestyle.Scoped);
             container.Register<ICategoryService, CategoryRepository>(Lifestyle.Scoped);
+
             container.Register<SchoolProjectDatabase>(Lifestyle.Scoped);
+
+           // container.Register<ApplicationSignInManager>(Lifestyle.Scoped);
+           // container.Register<ApplicationUserManager>(Lifestyle.Scoped);
+           // container.Register<ApplicationUserStore>(Lifestyle.Scoped);
+
             container.Register<IRepositoryWrapper, RepositoryWrapper>(Lifestyle.Scoped);
 
 

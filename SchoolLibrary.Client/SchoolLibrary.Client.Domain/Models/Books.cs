@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace SchoolLibrary.Client.Domain.Models
 {
-    class Books
+    public class Books
     {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Descriptions { get; set; }
+        public string ISBN { get; set; }
+        public DateTime Published { get; set; }
+        public int PageCount { get; set; }
+        public int AuthorId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

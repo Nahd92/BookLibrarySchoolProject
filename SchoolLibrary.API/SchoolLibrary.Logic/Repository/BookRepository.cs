@@ -21,6 +21,7 @@ namespace SchoolLibrary.Logic.Repository
         }
 
         public async Task<IEnumerable<IBooks>> GetAllBooksAsync() => await _database.Books.ToListAsync();
+        
 
         public async Task<IBooks> GetBookByIdAsync(int id) => await _database.Books.FirstOrDefaultAsync(x => x.Id == id);
 

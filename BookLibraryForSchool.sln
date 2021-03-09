@@ -17,11 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Logic", "Scho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Tests", "SchoolLibrary.API\SchoolLibrary.Tests\SchoolLibrary.Tests.csproj", "{89D6542E-860E-43DC-9BAE-26E86564FC57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client", "SchoolLibraryClient\SchoolLibrary.Client\SchoolLibrary.Client.csproj", "{8545EAB6-35A6-4656-950F-B237E92D7A76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client", "SchoolLibrary.Client\SchoolLibrary.Client\SchoolLibrary.Client.csproj", "{8545EAB6-35A6-4656-950F-B237E92D7A76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Domain", "SchoolLibraryClient\SchoolLibrary.Client.Domain\SchoolLibrary.Client.Domain.csproj", "{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Domain", "SchoolLibrary.Client\SchoolLibrary.Client.Domain\SchoolLibrary.Client.Domain.csproj", "{927E6B0D-DEF4-4EB1-BFA9-CB815891E994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Tests", "SchoolLibraryClient\SchoolLibrary.Client.Tests\SchoolLibrary.Client.Tests.csproj", "{B2564938-67AC-4B73-80FA-33C60D3C3FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolLibrary.Client.Tests", "SchoolLibrary.Client\SchoolLibrary.Client.Tests\SchoolLibrary.Client.Tests.csproj", "{B2564938-67AC-4B73-80FA-33C60D3C3FEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SchoolLibraryIdentity", "SchoolLibraryIdentity", "{9651A74A-F579-408B-B488-74FA408D3E5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
