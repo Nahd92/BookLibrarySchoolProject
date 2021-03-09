@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace SchoolLibrary.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ApiController
     {
-        public ActionResult Index()
-        {
-            ViewBag.Title = "Home Page";
+        // GET: Home
+            public IHttpActionResult Index()
+            {
+                string welcome = "Hello mister"; 
 
-            return View();
+                return Ok(welcome);
+            }
         }
-    }
 }

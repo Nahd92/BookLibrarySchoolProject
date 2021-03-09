@@ -4,6 +4,8 @@ using SchoolLibrary.Domain.Models.ModelBooks;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +22,7 @@ namespace SchoolLibrary.Logic.Repository
 
         public async Task<IEnumerable<IBooks>> GetAllBooksAsync() => await _database.Books.ToListAsync();
 
-        public async Task<IBooks> GetBookByIdAsync(int id) => await _database.Books.SingleOrDefaultAsync(x => x.Id == id);
+        public async Task<IBooks> GetBookByIdAsync(int id) => await _database.Books.FirstOrDefaultAsync(x => x.Id == id);
 
 
         public async Task<bool> CreateAsync(IBooks books)
@@ -46,10 +48,31 @@ namespace SchoolLibrary.Logic.Repository
         //Oklart om denna fungererar
         public async Task<bool> UpdateAsync(int id, IBooks books)
         {
-            var bookId = GetBookByIdAsync(id);            
-            _database.Entry(bookId).CurrentValues.SetValues(books);
-            var updated = await _database.SaveChangesAsync();
-            return updated > 0;
+            try
+            {
+                IBooks book = await _database.Books.Where(x => x.Id == id).SingleOrDefaultAsync();
+
+                books.Id = book.Id;
+                books.ISBN = book.ISBN;
+                books.AuthorId = book.AuthorId;
+
+                _database.Entry(book).CurrentValues.SetValues(books);
+                var updated = await _database.SaveChangesAsync();
+                return updated > 0;
+            }
+            catch (DbEntityValidationException dbex)
+            {
+                foreach (var validationErrors in dbex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
+            return false;
         }
 
 

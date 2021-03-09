@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace SchoolLibrary.Tests.Controllers
@@ -33,8 +34,7 @@ namespace SchoolLibrary.Tests.Controllers
             var response = await controller.GetAllAuthors();
             //Assert
 
-            var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
-            result.StatusCode.Should().Be(404);
+            response.Should().BeOfType<NotFoundResult>();
         }
 
         [TestMethod]

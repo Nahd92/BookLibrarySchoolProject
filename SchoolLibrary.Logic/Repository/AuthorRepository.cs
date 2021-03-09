@@ -14,6 +14,7 @@ namespace SchoolLibrary.Logic.Repository
         public AuthorRepository(SchoolProjectDatabase database)
         {
             _database = database;
+                 
         }
         public async Task<Author> GetAuthorByName(Author author) =>
                         await _database.Authors.Where(x => x.FirstName == author.FirstName 

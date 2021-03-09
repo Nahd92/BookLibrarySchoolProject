@@ -1,9 +1,11 @@
-﻿using SchoolLibrary.Data.Database;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SchoolLibrary.Data.Database;
 using SchoolLibrary.Domain.Interfaces;
 using SchoolLibrary.Logic.Repository;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
+using SimpleInjector.Integration.WebApi;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -17,29 +19,40 @@ namespace SchoolLibrary
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 
-            var container = new Container();
 
+            var serviceProvider = new ServiceCollection();
+
+            serviceProvider.AddHttpClient();
+            var service = serviceProvider.AddHttpClient().BuildServiceProvider();
+
+
+            var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
-            container.Register<IBookServices, BookRepository>(Lifestyle.Scoped);
+
             container.Register<IAuthorService, AuthorRepository>(Lifestyle.Scoped);
+            container.Register<IBookServices, BookRepository>(Lifestyle.Scoped);
             container.Register<ICategoryService, CategoryRepository>(Lifestyle.Scoped);
-            container.Register<SchoolProjectDatabase>(Lifestyle.Singleton);
+            container.Register<SchoolProjectDatabase>(Lifestyle.Scoped);
             container.Register<IRepositoryWrapper, RepositoryWrapper>(Lifestyle.Scoped);
 
 
 
-            container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration, Assembly.GetExecutingAssembly());
+
+            //container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
             container.Verify();
 
-            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+           // DependencyResolver.SetResolver(new SimpleInjectorWebApiDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
     }
 }

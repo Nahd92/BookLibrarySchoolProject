@@ -1,5 +1,7 @@
-﻿using SchoolLibrary.Data.Database;
+﻿using Microsoft.AspNet.Identity;
+using SchoolLibrary.Data.Database;
 using SchoolLibrary.Domain.Interfaces;
+using SchoolLibrary.Domain.Models;
 
 namespace SchoolLibrary.Logic.Repository
 {
@@ -9,7 +11,6 @@ namespace SchoolLibrary.Logic.Repository
         private  IAuthorService _authorService;
         private  IBookServices _bookServices;
         private  ICategoryService _categoryService;
-
 
         public IAuthorService Author
         {
@@ -46,6 +47,7 @@ namespace SchoolLibrary.Logic.Repository
                 return _categoryService;
             }
         }
+
 
         public RepositoryWrapper(SchoolProjectDatabase database)
         {

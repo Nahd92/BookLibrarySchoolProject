@@ -1,11 +1,13 @@
-﻿using SchoolLibrary.Domain.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using SchoolLibrary.Domain.Models;
 using SchoolLibrary.Domain.Models.ModelBooks;
 using System.Data.Entity;
 
 namespace SchoolLibrary.Data.Database
 {
-    public class SchoolProjectDatabase : DbContext
+    public class SchoolProjectDatabase : IdentityDbContext<ApplicationUser>
     {
+
         public SchoolProjectDatabase() : base("BookLibraryForSchool")
         {
                 

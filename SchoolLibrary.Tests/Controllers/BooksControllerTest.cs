@@ -12,7 +12,9 @@ using SchoolLibrary.Logic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace SchoolLibrary.Tests.Controllers
@@ -41,11 +43,6 @@ namespace SchoolLibrary.Tests.Controllers
                 };
 
 
-
-
-
-
-
         private readonly Mock<IRepositoryWrapper> mockService;
         private readonly BooksController bookController;
 
@@ -65,8 +62,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.GetAll();
             //Assert
-            var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
-            result.StatusCode.Should().Be(404);
+            response.Should().BeOfType<NotFoundResult>();
         }
 
         [TestMethod]
@@ -77,8 +73,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.GetById(null);
             //Assert
-            var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
-            result.StatusCode.Should().Be(400);
+            response.Should().BeOfType<BadRequestResult>();
         }
 
         [TestMethod]
@@ -96,8 +91,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.GetById(1);
             //Assert
-            var result = response.Should().BeOfType<JsonHttpStatusResult>().Which;
-            result.StatusCode.Should().Be(200);
+            response.Should().BeOfType<JsonResult<BookResponse>>();
         }
 
 
@@ -110,8 +104,8 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.GetById(1);
             //Assert
-            var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
-            var book = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
+            var result = response.Should().BeOfType<JsonResult<BookResponse>>().Subject;
+            var book = result.Content.Should().BeAssignableTo<BookResponse>().Subject;
             book.Title.Should().Be("Lord of the rings");
         }
 
@@ -127,8 +121,8 @@ namespace SchoolLibrary.Tests.Controllers
             var response = await bookController.GetAll();
             //Assert
 
-            var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
-            var book = result.Data.Should().BeAssignableTo<IEnumerable<IBooks>>().Subject;
+            var result = response.Should().BeOfType<JsonResult<IEnumerable<IBooks>>>().Subject;
+            var book = result.Content.Should().BeAssignableTo<IEnumerable<IBooks>>().Subject;
             book.Count().Should().Be(2);
         }
 
@@ -157,8 +151,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Assert
             mockService.Verify(x => x.Author.CreateAsync(It.IsAny<Author>()), Times.Once());
             mockService.Verify(x => x.Category.GetCategoryByName(It.IsAny<string>()), Times.Once());
-            var result = response.Should().BeOfType<JsonHttpStatusResult>().Which;
-            result.StatusCode.Should().Be(200);
+            response.Should().BeOfType<JsonResult<BookResponse>>();
         }
 
         [TestMethod]
@@ -183,9 +176,10 @@ namespace SchoolLibrary.Tests.Controllers
 
             //Assert    
             mockService.Verify(x => x.Author.CreateAsync(It.IsAny<Author>()), Times.Once());
+            mockService.Verify(x => x.Book.CreateAsync(It.IsAny<IBooks>()), Times.Once());
             mockService.Verify(x => x.Category.GetCategoryByName(It.IsAny<string>()), Times.Once());
-            var result = response.Should().BeOfType<JsonHttpStatusResult>().Subject;
-            var bookResponseResult = result.Data.Should().BeAssignableTo<BookResponse>().Subject;
+            var result = response.Should().BeOfType<JsonResult<BookResponse>>().Subject;
+            var bookResponseResult = result.Content.Should().BeAssignableTo<BookResponse>().Subject;
             bookResponseResult.Author.Should().Be("J.R.R Tolkien");
         }
 
@@ -199,8 +193,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.Delete(deletedId);
             //Assert
-            var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
-            result.StatusCode.Should().Be(204);
+            response.Should().BeOfType<OkResult>();
         }
 
 
@@ -215,8 +208,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.Delete(deletedId);
             //Assert
-            var result = response.Should().BeOfType<HttpNotFoundResult>().Which;
-            result.StatusCode.Should().Be(404);
+            response.Should().BeOfType<NotFoundResult>();
         }
 
         [TestMethod]
@@ -227,8 +219,7 @@ namespace SchoolLibrary.Tests.Controllers
             //Act
             var response = await bookController.Delete(null);
             //Assert
-            var result = response.Should().BeOfType<HttpStatusCodeResult>().Which;
-            result.StatusCode.Should().Be(400);
+            response.Should().BeOfType<BadRequestResult>();
         }
     }
 }

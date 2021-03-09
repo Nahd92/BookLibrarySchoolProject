@@ -45,6 +45,12 @@
     <Reference Include="GenFu, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GenFu.1.6.0\lib\net461\GenFu.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -64,6 +70,14 @@
     <Compile Include="Migrations\202103062017136_COommit.Designer.cs">
       <DependentUpon>202103062017136_COommit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103071012250_Added ApplicationUser.cs" />
+    <Compile Include="Migrations\202103071012250_Added ApplicationUser.Designer.cs">
+      <DependentUpon>202103071012250_Added ApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103071117533_Added.cs" />
+    <Compile Include="Migrations\202103071117533_Added.Designer.cs">
+      <DependentUpon>202103071117533_Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,6 +94,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103062017136_COommit.resx">
       <DependentUpon>202103062017136_COommit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071012250_Added ApplicationUser.resx">
+      <DependentUpon>202103071012250_Added ApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071117533_Added.resx">
+      <DependentUpon>202103071117533_Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,45 +1,42 @@
-﻿using SchoolLibrary.Domain.Interfaces;
+﻿using SchoolLibrary.Contracts.Routes;
+using SchoolLibrary.Domain.Interfaces;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace SchoolLibrary.Controllers
 {
-    public class AuthorController : Controller
+    [RoutePrefix("api/Author")]
+    public class AuthorController : ApiController
     {
+  
         private readonly IRepositoryWrapper _repoWrapper;
-        public AuthorController(IRepositoryWrapper repoWrapper)
+        public AuthorController(IRepositoryWrapper repoWrapper) 
         {
             _repoWrapper = repoWrapper;
         }
 
-        // GET: Author
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-
-        [HttpGet]
-        public async Task<ActionResult> GetAllAuthors()
+        [Route(RoutesAPI.Author.GetAll)]
+        public async Task<IHttpActionResult> GetAllAuthors()
         {            
             var authors = await _repoWrapper.Author.GetAuthorsAsync();
 
             if (authors == null)
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return Json(authors);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetAuthorById(int id)
+        [Route(RoutesAPI.Author.GetById)]
+        public async Task<IHttpActionResult> GetAuthorById(int id)
         {
             var author = await _repoWrapper.Author.GetAuthorByIdAsync(id);
 
             if (author != null)
-                return new JsonResult { Data = author, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return Json(author);
 
-            return HttpNotFound();
+            return NotFound();
         }
 
 
