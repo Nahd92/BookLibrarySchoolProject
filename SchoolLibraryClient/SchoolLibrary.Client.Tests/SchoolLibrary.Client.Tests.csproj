@@ -99,7 +99,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SchoolLibrary.Client\SchoolLibrary.Client.csproj">
+    <ProjectReference Include="..\SchoolLibrary.Client\SchoolLibrary.Client.csproj">
       <Project>{8545EAB6-35A6-4656-950F-B237E92D7A76}</Project>
       <Name>SchoolLibrary.Client</Name>
     </ProjectReference>
