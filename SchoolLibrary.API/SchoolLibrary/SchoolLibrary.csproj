@@ -338,12 +338,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Contracts\Request\CreateBookRequest.cs" />
-    <Compile Include="Contracts\Request\LibraryRequest.cs" />
     <Compile Include="Contracts\Request\RegisterUserRequest.cs" />
     <Compile Include="Contracts\Request\UpdateBookRequest.cs" />
     <Compile Include="Contracts\Request\UserLoginRequest.cs" />
     <Compile Include="Contracts\Response\BookResponse.cs" />
-    <Compile Include="Contracts\Response\LibraryResponse.cs" />
     <Compile Include="Contracts\Response\RegisterFailedResponse.cs" />
     <Compile Include="Contracts\Routes\RoutesAPIcs.cs" />
     <Compile Include="Contracts\ViewModels\BookViewModel.cs" />

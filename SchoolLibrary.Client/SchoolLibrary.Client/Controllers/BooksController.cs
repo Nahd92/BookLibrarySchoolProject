@@ -2,6 +2,7 @@
 using SchoolLibrary.Client.Domain.Models;
 using SchoolLibrary.Client.Domain.Requests;
 using SchoolLibrary.Client.Domain.Response;
+using SchoolLibrary.Client.Logic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,11 @@ namespace SchoolLibrary.Client.Controllers
     [Route("[controller]/[action]")]
     public class BooksController : Controller
     {
-        // GET: Books
+        private readonly BookRepository _bookRepo;
+        public BooksController(BookRepository bookRepo)
+        {
+            _bookRepo = bookRepo;
+        }
 
 
         [Route("")]
@@ -26,81 +31,77 @@ namespace SchoolLibrary.Client.Controllers
         [Route("Home/Index")]
         public async Task<ActionResult> Index()
         {
-            using (var client = new HttpClient())
-            {
-                var books = await client.GetFromJsonAsync<IEnumerable<Books>>("https://localhost:44382/api/Books/getAll");
-                 return View(books);             
-            }
-       }
+            var allBooks = await _bookRepo.GetAllBooksAsync();
+            if (allBooks == null)
+                return View();
+
+             return View(allBooks);
+        }
 
         [HttpGet]
         [Route("Books/Details/{id:int}")]
         public async Task<ActionResult> Details(int id)
         {
-            using (var client = new HttpClient())
-            {
-                var path = "https://localhost:44382/api/Books/GetById";
-                var book = await client.GetFromJsonAsync<BookResponse>(path + $"/{id}");
-                return View(book);
-            }
+            var book = await _bookRepo.GetBookByIdAsync(id);
+            if (book == null)
+                return View();
+
+            return View(book);
         }
 
 
-
         [HttpGet]
-
         public ActionResult Create()
         {
-            var book = new CreateBooksRequest();
-            return View(book);
+            var model = new CreateBooksRequest();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateBooksRequest request)
         {
-            
-            using (var client = new HttpClient())
-            {
-                var bookRequest = JsonConvert.SerializeObject(request);
-                HttpContent content = new StringContent(bookRequest, Encoding.UTF8, "application/json");
+            if (!ModelState.IsValid)
+                return View();
 
-                var result = await client.PostAsync("https://localhost:44382/api/Books/Create", content);
-                if (result.IsSuccessStatusCode)
-                    return RedirectToAction("Index");
-            }
+           var response = await _bookRepo.CreateAsync(request);
 
-            return View(request);         
+            if (response.IsSuccessStatusCode)
+                    return View("SuccessfullyCreatedBook"); 
+
+            return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         public async Task<ActionResult> Delete(int? id)
         {
-            using (var client = new HttpClient())
-            {
-                var path = "https://localhost:44382/api/Books/GetById";
-                var response = await client.GetFromJsonAsync<Books>(path + $"/{id}");
-                return View(response);
-            }
+            var book = await _bookRepo.GetBookByIdAsync((int)id);
+            if (book == null)
+                return View();
+
+            return View(book);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
-            using (var client = new HttpClient())
-            {
-                var response = await client.DeleteAsync("https://localhost:44382/api/Books/Delete" + $"/{id}");
+            var response = await _bookRepo.DeleteAsync(id);
 
-                response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+                return View("SuccessfullyDeletedBook");
 
-                if (response.IsSuccessStatusCode)
-                    return RedirectToAction("Index");
-            }
-            return View(id);
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Libraries()
+        {
+            var allLibraries = await _bookRepo.GetLibraries();
+            if (allLibraries == null)
+                return View();
+
+            return View(allLibraries);
         }
     }
 }

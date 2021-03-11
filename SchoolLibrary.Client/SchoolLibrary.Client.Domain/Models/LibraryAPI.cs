@@ -5,31 +5,31 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace SchoolLibrary.Domain.Models
+namespace SchoolLibrary.Client.Domain.Models
 {
     public class LibraryAPI
     {
-        public libraries[] libraries { get; set; }
+        public Libraries[] Libraries { get; set; }
     }
-    public class libraries
+    public class Libraries
     {
         [JsonPropertyName("identifier")]
-        public string identifier { get; set; }
+        public string Identifier { get; set; }
         [JsonPropertyName("sigel")]
-        public string sigel { get; set; }
-        public string type { get; set; }
+        public string Sigel { get; set; }
+        public string Type { get; set; }
         [JsonPropertyName("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [JsonPropertyName("dept")]
-        public string dept { get; set; }
+        public string Dept { get; set; }
 
         [JsonPropertyName("url")]
-        public string url { get; set; }
+        public string Url { get; set; }
         [JsonPropertyName("county")]
-        public object county { get; set; }
+        public object County { get; set; }
         [JsonPropertyName("description")]
-        public object description { get; set; }
+        public object Description { get; set; }
         [JsonPropertyName("country_code")]
-        public string country_code { get; set; }
+        public string Country_code { get; set; }
     }
 }

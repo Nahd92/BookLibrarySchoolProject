@@ -92,7 +92,6 @@
     <Compile Include="Interfaces\IRepositoryWrapper.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\LibraryAPI.cs" />
     <Compile Include="Models\ModelBooks\Books.cs" />
     <Compile Include="Models\Categori.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

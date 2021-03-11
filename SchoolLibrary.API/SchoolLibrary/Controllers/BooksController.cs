@@ -23,44 +23,14 @@ namespace SchoolLibrary.Controllers
     public class BooksController : ApiController
     {
         private readonly IRepositoryWrapper _repoWrapper;
-        private string ErrorString;
-
         public BooksController(IRepositoryWrapper repoWrapper)
         {
             _repoWrapper = repoWrapper;
         }
 
 
-        //Får inte ut bestämda egenskaper från APIn.. Fel SelectTokens?
-        [Route(RoutesAPI.Books.GetAllLibraries)]
         [HttpGet]
-        public async Task<IHttpActionResult> GetAllLibraries()
-        {
-            try
-            {
-                var client = new HttpClient();
-                var librariesAPI = await client.GetFromJsonAsync<LibraryAPI>("https://bibdb.libris.kb.se/api/lib?dump=true&country_code=se");
-
-                var returnResponse = new List<LibraryResponse>();
-
-                foreach (var library in librariesAPI.libraries.Where(i => i != null))
-                {
-                    returnResponse.Add(new LibraryResponse { Name = library.name?.ToString() ?? null, Code = library.country_code?.ToString() ?? null, Url = library.url?.ToString() ?? null });
-                };
-
-                return Json(returnResponse);
-            }
-            catch (Exception ex)
-            {
-                ErrorString = $"Error: {ex.Message}";
-                throw;
-            }
-        }
-
-
-
         [Route(RoutesAPI.Books.GetById)]
-        [HttpGet]
         public async Task<IHttpActionResult> GetById([FromUri] int? id)
         {
             if (id == null)
@@ -83,13 +53,11 @@ namespace SchoolLibrary.Controllers
                 Category = book.CategoryId.ToString()
             };
 
-
             return Json(bookReponse);
         }
 
-
-        [Route(RoutesAPI.Books.GetAll)]
         [HttpGet]
+        [Route(RoutesAPI.Books.GetAll)]
         public async Task<IHttpActionResult> GetAll()
         {
             var book = await _repoWrapper.Book.GetAllBooksAsync();
@@ -97,13 +65,11 @@ namespace SchoolLibrary.Controllers
             if (book == null)
                 return NotFound();
 
-          
             return Json(book);
         }
 
-
-        [Route(RoutesAPI.Books.Delete)]
         [HttpDelete]
+        [Route(RoutesAPI.Books.Delete)]
         public async Task<IHttpActionResult> Delete([FromUri] int? id)
         {
             if (id == null)
@@ -117,14 +83,12 @@ namespace SchoolLibrary.Controllers
             return NotFound();
         }
 
-
-        [Route(RoutesAPI.Books.Create)]
         [HttpPost]
+        [Route(RoutesAPI.Books.Create)]
         public async Task<IHttpActionResult> Create([FromBody] CreateBookRequest createBookRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-
 
             var author = await _repoWrapper.Author.CreateAsync(new Author()
             { FirstName = createBookRequest.AuthorName, LastName = createBookRequest.AuthorLastName });
@@ -132,12 +96,10 @@ namespace SchoolLibrary.Controllers
             if (author == null)
                 return BadRequest("No Authors was inputed");
 
-
             var category = await _repoWrapper.Category.GetCategoryByName(createBookRequest.Category);
 
             if (category == null)
                 return BadRequest("No Category could be found with that name!");
-
 
             var book = new IBooks
             {
@@ -166,13 +128,12 @@ namespace SchoolLibrary.Controllers
                 Author = $"{author.FirstName} {author.LastName}",
                 Category = category.Name
             };
-
             return Json(response);
         }
 
 
-        [Route(RoutesAPI.Books.Update)]
         [HttpPut]
+        [Route(RoutesAPI.Books.Update)]
         public async Task<IHttpActionResult> Update([FromUri] int id, [FromBody] UpdateBookRequest request)
         {
             if (!ModelState.IsValid)

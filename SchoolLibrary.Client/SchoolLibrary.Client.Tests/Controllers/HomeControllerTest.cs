@@ -1,10 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
 using SchoolLibrary.Client;
 using SchoolLibrary.Client.Controllers;
+using SchoolLibrary.Client.Logic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SchoolLibrary.Client.Tests.Controllers
@@ -41,14 +49,7 @@ namespace SchoolLibrary.Client.Tests.Controllers
         [TestMethod]
         public void Contact()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Contact() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
+              
         }
     }
 }

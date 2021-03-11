@@ -21,9 +21,9 @@ namespace SchoolLibrary.Logic.Repository
         }
 
         public async Task<IEnumerable<IBooks>> GetAllBooksAsync() => await _database.Books.ToListAsync();
-        
 
-        public async Task<IBooks> GetBookByIdAsync(int id) => await _database.Books.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<IBooks> GetBookByIdAsync(int id) => 
+                                await _database.Books.FirstOrDefaultAsync(x => x.Id == id);
 
 
         public async Task<bool> CreateAsync(IBooks books)
@@ -46,7 +46,6 @@ namespace SchoolLibrary.Logic.Repository
         }
 
 
-        //Oklart om denna fungererar
         public async Task<bool> UpdateAsync(int id, IBooks books)
         {
             try

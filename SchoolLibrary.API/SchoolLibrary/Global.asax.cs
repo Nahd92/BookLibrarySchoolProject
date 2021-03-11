@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SchoolLibrary.Data.Database;
 using SchoolLibrary.Domain.Interfaces;
-using SchoolLibrary.Domain.Models;
 using SchoolLibrary.Logic.Repository;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
-using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Integration.WebApi;
 using System.Reflection;
 using System.Web.Http;

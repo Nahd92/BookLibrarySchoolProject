@@ -70,10 +70,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IBookRepository.cs" />
+    <Compile Include="Interfaces\IHttpClientProvider.cs" />
     <Compile Include="Models\Authors.cs" />
     <Compile Include="Models\Books.cs" />
+    <Compile Include="Models\LibraryAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CreateBooksRequest.cs" />
+    <Compile Include="Response\LibraryResponse.cs" />
     <Compile Include="Response\BookResponse.cs" />
   </ItemGroup>
   <ItemGroup>
