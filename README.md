@@ -1,5 +1,8 @@
 # BookLibrarySchoolProject
 
+Not finished project and there can be bugs
+
+
 # BooksController and Create Book Method
 ![Create](https://user-images.githubusercontent.com/62704491/110589086-34fc3500-8176-11eb-8f17-db0e444baea4.png)
 # AuthorRepository
