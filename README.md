@@ -1,6 +1,6 @@
 # BookLibrarySchoolProject
 
-Not finished project and there can be bugs
+Not finished project
 
 
 # BooksController and Create Book Method
